@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save the Date - Kirana & Andrzej</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Crimson+Text:wght@400;600&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Reset --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* prevents scrollbars */
+            color: #f8f8f8; /* default off-white text color */
+        }
+
+        /* --- Full Screen Background Container --- */
+        #wcard-container {
+            /* 1. Add your blank image path here: */
+            background-image: url('save-the-date-blank.png'); 
+            
+            background-size: cover; /* ensures the image covers the screen */
+            background-position: center; /* centers the background */
+            background-repeat: no-repeat;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* vertical center */
+            align-items: center; /* horizontal center */
+            text-align: center;
+        }
+
+        /* --- Individual Element Styling --- */
+
+        /* The Personalized Name (Replaces "Dear Guest") */
+        #guest-salutation {
+            font-family: 'Crimson Text', serif; /* similar to the serif body font */
+            font-size: 2.5rem; /* large, matching "Save The Date" */
+            font-weight: 400;
+            margin-bottom: -15px; /* pull "Save The Date" closer */
+        }
+
+        /* "Save The Date" Main Title */
+        #main-title {
+            font-family: 'Allura', cursive; /* excellent match for the script font */
+            font-size: 8rem; /* very large */
+            margin-top: 0;
+            margin-bottom: 25px; /* space before the date */
+        }
+
+        /* The Numerical Date */
+        #date {
+            font-family: 'Quicksand', sans-serif; /* very close thin sans-serif */
+            font-weight: 300;
+            font-size: 3rem;
+            letter-spacing: 0.15em; /* adds spacing between characters like original */
+            margin-bottom: 40px; /* space before the body text */
+        }
+
+        /* The Main Body Text */
+        #body-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.5rem;
+            max-width: 60%; /* matches the layout's width */
+            line-height: 1.6; /* improved readability */
+            margin-bottom: 50px; /* space before names */
+        }
+
+        /* The Couple's Names */
+        #couple-names {
+            font-family: 'Allura', cursive;
+            font-size: 4rem;
+            margin-top: 0;
+        }
+
+        /* Small divider bars (optional, if you want to add them in HTML) */
+        .gold-divider {
+            width: 40%;
+            height: 1px;
+            background-color: #d4af37; /* a gold color */
+            margin: 20px 0;
+            /* This line hides them, delete it to enable them: */
+            display: none; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="wcard-container">
+        
+        <h2 id="guest-salutation">Dear <span id="guest-name">Guest</span>,</h2>
+        
+        <h1 id="main-title">Save The Date</h1>
+        <div class="date-container">
+            <span class="gold-divider"></span>
+            <p id="date">03.06.2026</p>
+            <span class="gold-divider"></span>
+        </div>
+        
+        <p id="body-text">We warmly invite you to share in the celebration of our marriage. Your presence on this joyous occasion will mean the world to us.</p>
+        
+        <h1 id="couple-names">Kirana & Andrzej</h1>
+
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Get the URL search parameters (?n=Maria)
+            const params = new URLSearchParams(window.location.search);
+            
+            // Look specifically for the 'n' parameter
+            const name = params.get('n');
+
+            // If a name is found, inject it!
+            if (name) {
+                // DecodeURIComponent cleans up special characters (e.g., %20 to space)
+                // replace(/[_-]/g, ' ') changes underscores/hyphens to spaces (e.g., Maria_Smith to Maria Smith)
+                const formattedName = decodeURIComponent(name).replace(/[_-]/g, ' ');
+                
+                // Set the text
+                document.getElementById('guest-name').innerText = formattedName;
+            }
+        }
+    </script>
+</body>
+</html>
