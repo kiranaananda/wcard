@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Save the Date</title>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Crimson+Text&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
     
     <style>
         body, html {
@@ -17,12 +17,19 @@
             font-family: 'Crimson Text', serif;
         }
 
+    @font-face {
+    font-family: 'MyCustomFont'; 
+    src: url('https://github.com/kiranaananda/wcard/raw/refs/heads/main/madelyn_regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
         /* 1. The Container */
         .wrapper {
             position: relative; 
             width: 100vw;
-            height: 100vh; /* Fallback for older browsers */
-            height: 100dvh; /* THE IPHONE 15 FIX: Dynamic Viewport Height */
+            height: 100vh;
+            height: 100dvh;
             overflow: hidden; 
             display: flex;
             justify-content: center;
@@ -51,16 +58,18 @@
             z-index: 1; 
             width: clamp(150px, 25vw, 400px);
             height: clamp(150px, 25vw, 400px);
-            pointer-events: none; /* Stops flowers from blocking text selection */
+            pointer-events: none;
         }
 
         /* 4. Top Row */
         .top-left { 
             top: -5%; 
-            left: -5%; 
+            left: -5%;
+            width: clamp(200px, 35vw, 500px);
+            height: clamp(200px, 35vw, 500px);
             background-image: url('https://github.com/kiranaananda/wcard/blob/main/left.png?raw=true');
-            background-position: 70% 40%;
-            background-size: 200%;
+            background-position: 70% 70%;
+            background-size: 300%;
         }
 
         .top-center { 
@@ -85,7 +94,7 @@
         /* 5. Bottom Row */
         .bottom-left { 
             bottom: -5%; 
-            left: -5%; 
+            left: -5%;
             background-image: url('https://github.com/kiranaananda/wcard/blob/main/right.png?raw=true');
             background-size: 200%;
             background-position: 60% 10%;
@@ -103,19 +112,21 @@
 
         .bottom-right { 
             bottom: -5%; 
-            right: -5%; 
+            right: -5%;
+            width: clamp(200px, 35vw, 500px);
+            height: clamp(200px, 35vw, 500px);
             background-image: url('https://github.com/kiranaananda/wcard/blob/main/left.png?raw=true');
             transform: rotate(180deg);
-            background-position: 70% 40%;
-            background-size: 200%;
+            background-position: 70% 70%;
+            background-size: 300%;
         }
 
         /* --- Text Styling --- */
-        #guest-salutation { font-size: clamp(1.2rem, 4vw, 1.8rem); margin-bottom: 10px; font-style: italic; }
-        #main-title { font-family: 'Allura', cursive; font-size: clamp(3rem, 10vw, 5rem); margin: 0; }
+        #guest-salutation { font-family: 'Quicksand', sans-serif; font-size: clamp(1.2rem, 4vw, 1.8rem); margin-bottom: 10px; }
+        #main-title { font-family: "Playball", cursive; font-size: clamp(3rem, 10vw, 5rem); margin: 0; }
         #date { font-family: 'Quicksand', sans-serif; font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: 5px; margin: 10px 0; }
         #body-text { font-size: clamp(0.9rem, 3vw, 1.2rem); max-width: 80%; line-height: 1.5; margin-bottom: 20px; }
-        #couple-names { font-family: 'Allura', cursive; font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; }
+        #couple-names { font-family: 'MyCustomFont', cursive; font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; }
         
         .gold-line {
             width: 150px;
