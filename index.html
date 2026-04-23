@@ -3,130 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Save the Date - Kirana & Andrzej</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Crimson+Text:wght@400;600&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
-
+    <title>Save the Date</title>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Crimson+Text&family=Quicksand:wght@300&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS Reset --- */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* prevents scrollbars */
-            color: #f8f8f8; /* default off-white text color */
+            background-color: #273144;
+            overflow: hidden;
+            color: white;
+            font-family: 'Crimson Text', serif;
         }
 
-        /* --- Full Screen Background Container --- */
-        #wcard-container {
-            /* 1. Add your blank image path here: */
-            background-image: url('save-the-date-blank.png'); 
-            
-            background-size: cover; /* ensures the image covers the screen */
-            background-position: center; /* centers the background */
-            background-repeat: no-repeat;
-            width: 100vw;
+        /* The 3x3 Grid */
+        .wrapper {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            grid-template-rows: 300px 1fr 300px;
             height: 100vh;
+            width: 100vw;
+        }
+
+        /* --- Corner & Edge Elements --- */
+        .decor {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .top-left { 
+            grid-column: 1; grid-row: 1; 
+            background-image: url('https://github.com/kiranaananda/wcard/blob/main/left.png?raw=true');
+            background-position:  70% 70%;
+            background-size: 140%;
+            transform: scale(3.5);
+        }
+
+        .top-center { 
+            grid-column: 2; grid-row: 1; 
+            background-image: url('https://github.com/kiranaananda/wcard/blob/main/middle.png?raw=true');
+            background-position: 50% 50%;
+            transform: scale(1.5);
+        }
+      
+        .top-right { 
+            grid-column: 3; grid-row: 1; 
+            background-image: url('https://github.com/kiranaananda/wcard/blob/main/right.png?raw=true');
+            background-position:  40% 800%;
+            background-size: 140%;
+            transform: scale(1.8) rotate(180deg);
+        }
+         .bottom-left { 
+            grid-column: 1; grid-row: 3; 
+            background-image: url('https://github.com/kiranaananda/wcard/blob/main/middle.png?raw=true');
+            background-position: 50% 50%;
+            transform: scale(1.5);
+        }
+        .bottom-center { 
+            grid-column: 2; grid-row: 3; 
+            background-image: url('https://github.com/kiranaananda/wcard/blob/main/middle.png?raw=true');
+            background-position: 50% 50%;
+            transform: scale(1.5) rotate (180deg);
+        }
+
+        .bottom-right { 
+            grid-column: 3; grid-row: 3; 
+            background-image: url('https://github.com/kiranaananda/wcard/blob/main/left.png?raw=true');
+            background-position:  70% 70%;
+            background-size: 140%;
+            transform: scale(3.5) rotate(180deg);
+        }
+
+        /* --- The Content Center --- */
+        .content {
+            grid-column: 2;
+            grid-row: 2;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* vertical center */
-            align-items: center; /* horizontal center */
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 20px;
+            z-index: 10;
         }
 
-        /* --- Individual Element Styling --- */
-
-        /* The Personalized Name (Replaces "Dear Guest") */
-        #guest-salutation {
-            font-family: 'Crimson Text', serif; /* similar to the serif body font */
-            font-size: 2.5rem; /* large, matching "Save The Date" */
-            font-weight: 400;
-            margin-bottom: -15px; /* pull "Save The Date" closer */
+        /* Text Styling */
+        #main-title { font-family: 'Allura', cursive; font-size: 5rem; margin: 0; }
+        #date { font-family: 'Quicksand', sans-serif; font-size: 2rem; letter-spacing: 5px; }
+        #guest-salutation { font-size: 1.8rem; margin-bottom: 10px; font-style: italic; }
+        
+        .gold-line {
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 10px 0;
         }
 
-        /* "Save The Date" Main Title */
-        #main-title {
-            font-family: 'Allura', cursive; /* excellent match for the script font */
-            font-size: 8rem; /* very large */
-            margin-top: 0;
-            margin-bottom: 25px; /* space before the date */
+        /* Mobile adjustment */
+        @media (max-width: 600px) {
+            .wrapper {
+                grid-template-columns: 100px 1fr 100px;
+                grid-template-rows: 100px 1fr 100px;
+            }
+            #main-title { font-size: 3rem; }
         }
-
-        /* The Numerical Date */
-        #date {
-            font-family: 'Quicksand', sans-serif; /* very close thin sans-serif */
-            font-weight: 300;
-            font-size: 3rem;
-            letter-spacing: 0.15em; /* adds spacing between characters like original */
-            margin-bottom: 40px; /* space before the body text */
-        }
-
-        /* The Main Body Text */
-        #body-text {
-            font-family: 'Crimson Text', serif;
-            font-size: 1.5rem;
-            max-width: 60%; /* matches the layout's width */
-            line-height: 1.6; /* improved readability */
-            margin-bottom: 50px; /* space before names */
-        }
-
-        /* The Couple's Names */
-        #couple-names {
-            font-family: 'Allura', cursive;
-            font-size: 4rem;
-            margin-top: 0;
-        }
-
-        /* Small divider bars (optional, if you want to add them in HTML) */
-        .gold-divider {
-            width: 40%;
-            height: 1px;
-            background-color: #d4af37; /* a gold color */
-            margin: 20px 0;
-            /* This line hides them, delete it to enable them: */
-            display: none; 
-        }
-
     </style>
 </head>
 <body>
 
-    <div id="wcard-container">
-        
-        <h2 id="guest-salutation">Dear <span id="guest-name">Guest</span>,</h2>
-        
+<div class="wrapper">
+    <div class="decor top-left"></div>
+    <div class="decor top-center"></div>
+    <div class="decor top-right"></div>
+
+    <div class="decor middle-left"></div>
+    <main class="content">
+        <div id="guest-salutation">Dear <span id="guest-name">Guest</span>,</div>
         <h1 id="main-title">Save The Date</h1>
-        <div class="date-container">
-            <span class="gold-divider"></span>
+        <p id="date">03.06.2026</p>
+        <h2 style="font-family: 'Allura', cursive; font-size: 3rem;">Kirana & Andrzej</h2>
+    </main>
+    <div class="decor middle-right"></div>
+
+    <div class="decor bottom-left"></div>
+    <div class="decor bottom-center"></div>
+    <div class="decor bottom-right"></div>
+</div>
+
+        <main class="content">
+            <div id="guest-salutation">Dear <span id="guest-name">Guest</span>,</div>
+            
+            <div class="gold-line"></div>
+            <h1 id="main-title">Save The Date</h1>
             <p id="date">03.06.2026</p>
-            <span class="gold-divider"></span>
-        </div>
-        
+            <div class="gold-line"></div>
+
         <p id="body-text">We warmly invite you to share in the celebration of our marriage. Your presence on this joyous occasion will mean the world to us.</p>
         
         <h1 id="couple-names">Kirana & Andrzej</h1>
-
+            
+            <h2 style="font-family: 'Allura', cursive; font-size: 3rem;">Kirana & Andrzej</h2>
+        </main>
     </div>
 
     <script>
-        window.onload = function() {
-            // Get the URL search parameters (?n=Maria)
-            const params = new URLSearchParams(window.location.search);
-            
-            // Look specifically for the 'n' parameter
-            const name = params.get('n');
+        // Extract name from URL path: /wcard/Maria
+        const pathArray = window.location.pathname.split('/');
+        // Get the last part of the path
+        const nameFromPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
 
-            // If a name is found, inject it!
-            if (name) {
-                // DecodeURIComponent cleans up special characters (e.g., %20 to space)
-                // replace(/[_-]/g, ' ') changes underscores/hyphens to spaces (e.g., Maria_Smith to Maria Smith)
-                const formattedName = decodeURIComponent(name).replace(/[_-]/g, ' ');
-                
-                // Set the text
-                document.getElementById('guest-name').innerText = formattedName;
-            }
+        if (nameFromPath && nameFromPath.toLowerCase() !== 'wcard' && nameFromPath !== 'index.html') {
+            document.getElementById('guest-name').innerText = decodeURIComponent(nameFromPath);
         }
     </script>
 </body>
