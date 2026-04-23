@@ -147,13 +147,14 @@
 </div>
 
 <script>
-    // Extract name from URL path
-    const pathArray = window.location.pathname.split('/');
-    const nameFromPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-
-    if (nameFromPath && nameFromPath.toLowerCase() !== 'wcard' && nameFromPath !== 'index.html') {
-        document.getElementById('guest-name').innerText = decodeURIComponent(nameFromPath).replace(/[_-]/g, ' ');
-    }
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('n');
+            if (name) {
+                const formattedName = decodeURIComponent(name).replace(/[_-]/g, ' ');
+                document.getElementById('guest-name').innerText = formattedName;
+            }
+        }
 </script>
 
 </body>
