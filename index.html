@@ -7,15 +7,74 @@
     <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
     
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: #273144;
-            overflow: hidden;
-            color: white;
-            font-family: 'Crimson Text', serif;
-        }
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #fffef7; /* The base color of the second page */
+}
+
+/* Page 1: Fixed on top */
+#first-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    z-index: 100;
+    /* This ensures the mask is smooth */
+    -webkit-mask-size: 100% 120%;
+    mask-size: 100% 120%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+
+#dew-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: 101; /* Sits exactly on top of the Navy wave edge */
+    pointer-events: none;
+    
+    /* Stronger blur for that 'misty beach' look */
+    -webkit-backdrop-filter: blur(15px); 
+    backdrop-filter: blur(15px);
+    
+    /* Use a background color with very low opacity to 'tint' the blur */
+    background-color: rgba(255, 255, 255, 0.1); 
+}
+
+#second-page {
+    position: relative;
+    z-index: 10;
+    margin-top: 100dvh;
+    background-color: #fffef7; /* Your elegant off-white */
+    
+    /* This SVG creates a subtle, organic paper grain */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -10px 50px rgba(0,0,0,0.1); /* Subtle shadow where it meets the navy */
+}
+
+.scroll-instruction {
+    margin-top: 30px;
+    font-family: 'Quicksand';
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
 
 @font-face {
     font-family: 'Malibu'; 
@@ -41,7 +100,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #273144;
         }
 
         /* 2. The Text Content Area */
@@ -144,7 +202,19 @@
     </style>
 </head>
 <body>
+  
+<svg width="0" height="0">
+    <defs>
+        <filter id="dew-filter">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+        </filter>
+        <mask id="wave-mask" maskUnits="objectBoundingBox">
+            <path id="wave-path" d="M0,0 L1,0 L1,0.5 Q0.5,0.6 0,0.5 Z" fill="white" filter="url(#dew-filter)" />
+        </mask>
+    </defs>
+</svg>
 
+<section class="page" id="first-page">  
 <div class="wrapper">
     <div class="decor top-left"></div>
     <div class="decor top-center"></div>
@@ -162,8 +232,18 @@
         <p id="body-text">We warmly invite you to share in the celebration of our marriage. Your presence on this joyous occasion will mean the world to us.</p>
         <p id="couple-names">Kirana and Andrzej</p>
     </main>
+<div id="dew-overlay"></div>
 </div>
+  </section>
 
+<section class="page" id="second-page">
+        <main class="content">
+            <h2 style="font-family: 'Madelyn'; font-size: 4rem;">Our Story</h2>
+            <img src="https://github.com/kiranaananda/wcard/blob/main/4.png?raw=true" style="width: clamp(200px, 60vw, 900px); height: auto;">
+            <img src="https://github.com/kiranaananda/wcard/blob/main/5.png?raw=true" style="width: clamp(200px, 60vw, 900px); height: auto;">>
+        </main>
+ </section>
+  
 <script>
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
@@ -173,6 +253,60 @@
                 document.getElementById('guest-name').innerText = formattedName;
             }
         }
+</script>
+  
+<script>
+window.onscroll = function() {
+    let scrollPos = window.scrollY;
+    let windowHeight = window.innerHeight;
+    let progress = Math.min(scrollPos / windowHeight, 1);
+    
+    const firstPage = document.getElementById('first-page');
+    const dewOverlay = document.getElementById('dew-overlay');
+
+    // The 'y' position of the wave
+    let y = (1 - progress) * 100;
+    
+    // Wave movement logic (The 'Wobble')
+    let w1 = Math.sin(progress * 8) * 3;
+    let w2 = Math.cos(progress * 8) * 3;
+
+    // 1. Create the Organic Wave Path
+    // We add more points to make it look 'curvy' rather than a straight line
+    let wavePath = `polygon(
+        0% 0%, 
+        100% 0%, 
+        100% ${y + w1}%, 
+        85% ${y + w2 + 2}%, 
+        65% ${y - w1 + 4}%, 
+        50% ${y + w2 + 5}%, 
+        35% ${y + w1 + 3}%, 
+        15% ${y - w2 + 2}%, 
+        0% ${y + w1}%
+    )`;
+
+    // 2. Apply as a Clip-Path for the Navy Page
+    firstPage.style.clipPath = wavePath;
+    
+    // 3. Apply the same Clip-Path to the Blur Overlay
+    // We shift it slightly (y + 1) so the blur sits right on the edge
+    let dewPath = `polygon(
+        0% ${y + w1 - 2}%, 
+        100% ${y + w1 - 2}%, 
+        100% ${y + w1 + 5}%, 
+        85% ${y + w2 + 7}%, 
+        65% ${y - w1 + 9}%, 
+        50% ${y + w2 + 10}%, 
+        35% ${y + w1 + 8}%, 
+        15% ${y - w2 + 7}%, 
+        0% ${y + w1 + 5}%
+    )`;
+    dewOverlay.style.clipPath = dewPath;
+
+    // Fade the content
+    const content = document.querySelector('#first-page .content');
+    if(content) content.style.opacity = 1 - (progress * 2);
+};
 </script>
 
 </body>
