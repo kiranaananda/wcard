@@ -8,42 +8,38 @@
     
 <style>
 
+/* Ensure the body allows scrolling now */
 body, html {
-    margin: 0;
-    padding: 0;
-    height: auto; /* Change from 100% to allow scrolling */
-    background-color: #273144;
-    overflow-x: hidden; /* Prevent horizontal wobbling */
-    color: white;
+    overflow-y: auto; 
+    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
 .page {
     position: relative;
     width: 100vw;
-    height: 100dvh; /* Each section takes exactly one screen height */
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* Keeps the massive flowers contained to their section */
 }
 
-/* Second Page Background */
+/* The specific flowers that will grow */
+.top-left {
+    transform-origin: top left;
+    z-index: 100; /* Stays above text during the transition */
+}
+
+.bottom-right {
+    transform-origin: bottom right;
+    z-index: 100;
+}
+
+/* The Second Page - Different Layout */
 #second-page {
-    background-color: #fdfaf6; /* Light cream for contrast */
+    background-color: #fdfaf6; /* Elegant Cream */
     color: #273144;
-}
-
-/* The Transitioning Flowers */
-.flower-transition {
-    transition: transform 0.5s ease-out; /* Smooth growth */
-    z-index: 100; /* Stays above everything during transition */
-}
-
-.scroll-hint {
-    margin-top: 20px;
-    font-family: 'Quicksand', sans-serif;
-    animation: bounce 2s infinite;
-    opacity: 0.7;
 }
 
 @keyframes bounce {
@@ -179,30 +175,28 @@ body, html {
     </style>
 </head>
 <body>
-    <section class="page" id="first-page">
-        <div class="decor top-left flower-transition"></div>
-        <div class="decor top-right"></div>
-        <div class="decor bottom-left flower-transition"></div>
-        <div class="decor bottom-right"></div>
-        
-        <main class="content">
-            <div id="guest-salutation">Dear <span id="guest-name">Guest</span>,</div>
-            <div class="gold-line"></div>
-            <h1 id="main-title">Save The Date</h1>
-            <p id="date">03.06.2026</p>
-            <div class="gold-line"></div>
-            <p id="body-text">We warmly invite you to share in the celebration of our marriage.</p>
-            <p id="couple-names">Kirana and Andrzej</p>
-            <div class="scroll-hint">Scroll Down ↓</div>
-        </main>
-    </section>
+<section class="page" id="first-page">
+    <div class="decor top-left"></div>
+    <div class="decor top-right"></div>
+    <div class="decor bottom-left"></div>
+    <div class="decor bottom-right"></div>
 
-    <section class="page" id="second-page">
-        <div class="content">
-            <h2>Our Story</h2>
-            <p>This page has a completely different vibe!</p>
-            </div>
-    </section>
+    <main class="content">
+        <div id="guest-salutation">Dear <span id="guest-name">Guest</span>,</div>
+        <h1 id="main-title">Save The Date</h1>
+        <p id="date">03.06.2026</p>
+        <p id="couple-names">Kirana and Andrzej</p>
+        <p style="margin-top: 50px; opacity: 0.6;">Scroll to Explore ↓</p>
+    </main>
+</section>
+
+<section class="page" id="second-page">
+    <main class="content">
+        <h2 style="font-family: 'Malibu'; font-size: 3rem;">Our Journey</h2>
+        <div class="gold-line"></div>
+        <p>This is where your second page content begins...</p>
+    </main>
+</section>
 
 <script>
         window.onload = function() {
@@ -220,23 +214,29 @@ window.onscroll = function() {
     let scrollPos = window.scrollY;
     let windowHeight = window.innerHeight;
     
-    // Calculate a ratio (0 to 1) of how far we have scrolled page 1
-    let scrollRatio = Math.min(scrollPos / windowHeight, 1);
+    // Progress is a decimal between 0 and 1
+    let progress = Math.min(scrollPos / windowHeight, 1);
 
-    // Get the flowers we want to grow
     const topLeft = document.querySelector('.top-left');
-    const bottomLeft = document.querySelector('.bottom-left');
+    const bottomRight = document.querySelector('.bottom-right');
+    const firstPageContent = document.querySelector('#first-page .content');
 
-    // Logic: Base scale (3) + (Scroll Amount * Grow Factor)
-    // As you scroll, they will grow from 3x to 15x, overwhelming the screen
-    let newScale = 3 + (scrollRatio * 12); 
+    // GROWTH LOGIC
+    // Starts at your current scale (3.5) and grows to 20 to cover the screen
+    let scaleValue = 3.5 + (progress * 16.5); 
     
-    // Applying the scale + original rotations
-    topLeft.style.transform = `scale(${newScale})`;
-    bottomLeft.style.transform = `scale(${newScale})`;
+    // Apply to Top-Left (Original rotation was 0)
+    topLeft.style.transform = `scale(${scaleValue})`;
+    
+    // Apply to Bottom-Right (Original rotation was 180deg)
+    bottomRight.style.transform = `scale(${scaleValue}) rotate(180deg)`;
 
-    // Optional: Fade out the first page text as it gets covered
-    document.querySelector('#first-page .content').style.opacity = 1 - (scrollRatio * 2);
+    // FADE LOGIC
+    // Fades the text out as the flowers move in
+    firstPageContent.style.opacity = 1 - (progress * 1.5);
+    
+    // Optional: Slight blur effect as it disappears
+    firstPageContent.style.filter = `blur(${progress * 10}px)`;
 };
 </script>
     
