@@ -230,7 +230,7 @@ body, html {
         <p id="body-text">
   Tuesday, April 28, 2026<br>
   7:00 PM<br>
-  Loulou Petit Bistro & Speakeasy<br>
+  Loulou Petit Bistro<br>
   176 8th Ave, New York, NY 10011
 </p>
     </main>
@@ -281,23 +281,23 @@ body, html {
 </script>
   
 <script>
-window.onscroll = function() {
+// 1. Move everything into a reusable function
+function handleWaveTransition() {
     let scrollPos = window.scrollY;
     let windowHeight = window.innerHeight;
     let progress = Math.min(scrollPos / windowHeight, 1);
     
-    const firstPage = document.getElementById('first-page');
+    // Use the IDs from your actual HTML
+    const waveLayer = document.getElementById('wave-layer') || document.getElementById('first-page');
     const dewOverlay = document.getElementById('dew-overlay');
 
-    // The 'y' position of the wave
     let y = (1 - progress) * 100;
     
-    // Wave movement logic (The 'Wobble')
+    // Wave movement logic
     let w1 = Math.sin(progress * 8) * 3;
     let w2 = Math.cos(progress * 8) * 3;
 
-    // 1. Create the Organic Wave Path
-    // We add more points to make it look 'curvy' rather than a straight line
+    // Organic Wave Path
     let wavePath = `polygon(
         0% 0%, 
         100% 0%, 
@@ -310,28 +310,46 @@ window.onscroll = function() {
         0% ${y + w1}%
     )`;
 
-    // 2. Apply as a Clip-Path for the Navy Page
-    firstPage.style.clipPath = wavePath;
+    // Apply clipPath to the navy background
+    if(waveLayer) waveLayer.style.clipPath = wavePath;
     
-    // 3. Apply the same Clip-Path to the Blur Overlay
-    // We shift it slightly (y + 1) so the blur sits right on the edge
-    let dewPath = `polygon(
-        0% ${y + w1 - 2}%, 
-        100% ${y + w1 - 2}%, 
-        100% ${y + w1 + 5}%, 
-        85% ${y + w2 + 7}%, 
-        65% ${y - w1 + 9}%, 
-        50% ${y + w2 + 10}%, 
-        35% ${y + w1 + 8}%, 
-        15% ${y - w2 + 7}%, 
-        0% ${y + w1 + 5}%
-    )`;
-    dewOverlay.style.clipPath = dewPath;
+    // Apply clipPath to the dew-overlay (The Ribbon)
+    if(dewOverlay) {
+        let dewPath = `polygon(
+            0% ${y + w1 - 2}%, 
+            100% ${y + w1 - 2}%, 
+            100% ${y + w1 + 5}%, 
+            85% ${y + w2 + 7}%, 
+            65% ${y - w1 + 9}%, 
+            50% ${y + w2 + 10}%, 
+            35% ${y + w1 + 8}%, 
+            15% ${y - w2 + 7}%, 
+            0% ${y + w1 + 5}%
+        )`;
+        dewOverlay.style.clipPath = dewPath;
+    }
 
     // Fade the content
     const content = document.querySelector('#first-page .content');
     if(content) content.style.opacity = 1 - (progress * 2);
-};
+}
+
+// 2. RUN ON SCROLL
+window.onscroll = handleWaveTransition;
+
+// 3. RUN ON LOAD (This removes the initial blur glitch)
+window.addEventListener('DOMContentLoaded', handleWaveTransition);
+
+// 4. Guest Name Logic (Keep this separate)
+window.addEventListener('load', function() {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('n');
+    if (name) {
+        const formattedName = decodeURIComponent(name).replace(/[_-]/g, ' ');
+        const nameElement = document.getElementById('guest-name');
+        if(nameElement) nameElement.innerText = formattedName;
+    }
+});
 </script>
 
 </body>
