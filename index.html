@@ -329,10 +329,10 @@
                 <p id="body-text">joyfully invite you to celebrate their</p>
                 <p id="main-title">Wedding Dinner</p>
                 <p id="body-text">
-                    Tuesday, April 28, 2026<br>
-                    7:00 PM<br>
-                    Loulou Petit Bistro<br>
-                    176 8th Ave, New York, NY 10011
+                    Saturday, May 23, 2026<br>
+                    6:00 PM<br>
+                    Meili<br>
+                    160 N 12th St, Williamsburg, NY, 11249
                 </p>
                 <div class="calendar-container">
                     <button class="cal-btn" onclick="toggleCalendarMenu()">Add to Calendar</button>
@@ -348,7 +348,7 @@
 
     <section class="page" id="second-page">
         <main class="content">
-            <h1 id="main-title" style="margin-top: 4rem; margin-bottom: 4rem;">Save The Date</h1>
+            <h1 id="main-title" style="margin-top: 4rem; margin-bottom: 4rem;">Wedding Reception</h1>
             <div class="gold-line"></div>
             <p id="date">Summer 2027</p>
             <div class="gold-line"></div>
@@ -486,8 +486,8 @@
             start: "20260428T190000",
             end: "20260428T213000",
             timezone: "America/New_York",
-            description: "Kirana Ananda & Andrzej Krzyzak joyfully invite you to celebrate their wedding dinner on Tuesday, April 28, 2026, 7:00 PM at Loulou Petit Bistro 176 8th Ave, New York, NY 10011.",
-            location: "LOULOU, 176 8th Ave, New York, NY 10011, USA"
+            description: "Kirana Ananda & Andrzej Krzyzak joyfully invite you to celebrate their wedding dinner on Saturday, May 23, 2026, 6:00 PM at Meili 160 N 12th St, Williamsburg, NY, 11249.",
+            location: "MEILI 沉香, 160 N 12th St, Brooklyn, NY 11249, USA"
         };
 
         function addGoogle() {
@@ -526,7 +526,7 @@
             const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
             const link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
-            link.setAttribute("download", "wedding-dinner-loulou.ics");
+            link.setAttribute("download", "wedding-dinner-meili.ics");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
