@@ -378,33 +378,28 @@
         </main>
     </section>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    let url = window.location.href;
-
-    // If opened via Facebook redirect, extract real URL
-    if (url.includes("l.facebook.com/l.php")) {
-        const fbParams = new URLSearchParams(window.location.search);
-        const encoded = fbParams.get("u");
-
-        if (encoded) {
-            try {
-                url = decodeURIComponent(encoded);
-            } catch (e) {}
-        }
-    }
-
-    const realParams = new URLSearchParams(new URL(url).search);
-    const name = realParams.get("n");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // 1. Grab the query string directly from the current URL
+    const params = new URLSearchParams(window.location.search);
+    
+    // 2. Extract the 'n' parameter
+    const name = params.get("n");
 
     if (name) {
+        // 3. Format the name by replacing underscores and dashes with spaces
         const formattedName = name.replace(/[_-]/g, " ");
+        
+        // 4. Find the element and inject the text
         const el = document.getElementById("guest-name");
-        if (el) el.textContent = formattedName;
+        if (el) {
+            el.textContent = formattedName;
+        } else {
+            console.warn("Could not find the element with ID 'guest-name'");
+        }
     }
 });
-</script>
+    </script>
     
 
     <script>
