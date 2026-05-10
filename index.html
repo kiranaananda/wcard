@@ -378,21 +378,33 @@
         </main>
     </section>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get("n");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-        if (name) {
-            const formattedName = name.replace(/[_-]/g, " ");
-        
-            const guestElement = document.getElementById("guest-name");
-            if (guestElement) {
-                guestElement.textContent = formattedName;
-            }
+    let url = window.location.href;
+
+    // If opened via Facebook redirect, extract real URL
+    if (url.includes("l.facebook.com/l.php")) {
+        const fbParams = new URLSearchParams(window.location.search);
+        const encoded = fbParams.get("u");
+
+        if (encoded) {
+            try {
+                url = decodeURIComponent(encoded);
+            } catch (e) {}
         }
-    });
-    </script>
+    }
+
+    const realParams = new URLSearchParams(new URL(url).search);
+    const name = realParams.get("n");
+
+    if (name) {
+        const formattedName = name.replace(/[_-]/g, " ");
+        const el = document.getElementById("guest-name");
+        if (el) el.textContent = formattedName;
+    }
+});
+</script>
     
 
     <script>
