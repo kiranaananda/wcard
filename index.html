@@ -380,47 +380,35 @@
 
     <script>
 document.addEventListener("DOMContentLoaded", function () {
-    function injectName() {
-        // 1. Get the full URL exactly as Messenger sees it
-        const currentUrl = window.location.href;
-        const urlObj = new URL(currentUrl);
-        
-        // 2. Look for the 'n' parameter in the query string
-        let name = urlObj.searchParams.get("n");
+    let name = null;
 
-        // 3. Fallback: Check if Messenger mangled the URL and pushed 'n' into the hash (#)
-        if (!name && window.location.hash.includes("n=")) {
-            const hashParams = new URLSearchParams(window.location.hash.substring(1));
-            name = hashParams.get("n");
-        }
-
-        const el = document.getElementById("guest-name");
-
-        // 4. If we found the name AND the HTML element, inject the text
-        if (name && el) {
-            el.textContent = name.replace(/[_-]/g, " ");
-            return true; // Success, stop trying
-        } 
-        // 5. DEBUG MODE
-        else if (!name && el) {
-            // Remove the "//" from the line below to see what URL Messenger is actually loading
-            // el.textContent = "DEBUG URL: " + currentUrl;
-        }
-        
-        return false; // Element or name not found yet
+    // 1. First, check the standard query string (for the old links you already sent)
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.has("n")) {
+        name = queryParams.get("n");
     }
 
-    // Try to run the function once immediately
-    if (!injectName()) {
-        // If it fails (likely because the element hasn't appeared on screen yet), 
-        // try again every 100 milliseconds for 3 seconds.
-        let attempts = 0;
-        const interval = setInterval(() => {
-            attempts++;
-            if (injectName() || attempts >= 30) {
-                clearInterval(interval);
-            }
-        }, 100);
+    // 2. If no name was found, check the hash (for the new Messenger links)
+    if (!name && window.location.hash) {
+        // Remove the '#' symbol so URLSearchParams can read it properly
+        const hashData = window.location.hash.substring(1); 
+        const hashParams = new URLSearchParams(hashData);
+        
+        if (hashParams.has("n")) {
+            name = hashParams.get("n");
+        }
+    }
+
+    // 3. If we found a name in either place, format and inject it
+    if (name) {
+        const formattedName = name.replace(/[_-]/g, " ");
+        const el = document.getElementById("guest-name");
+        
+        if (el) {
+            el.textContent = formattedName;
+        } else {
+            console.log("Name found, but the 'guest-name' element hasn't loaded.");
+        }
     }
 });
     </script>
