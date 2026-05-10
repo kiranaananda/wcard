@@ -379,15 +379,21 @@
     </section>
 
     <script>
-        window.onload = function () {
-            const params = new URLSearchParams(window.location.search);
-            const name = params.get('n');
-            if (name) {
-                const formattedName = decodeURIComponent(name).replace(/[_-]/g, ' ');
-                document.getElementById('guest-name').innerText = formattedName;
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get("n");
+
+        if (name) {
+            const formattedName = name.replace(/[_-]/g, " ");
+        
+            const guestElement = document.getElementById("guest-name");
+            if (guestElement) {
+                guestElement.textContent = formattedName;
             }
         }
+    });
     </script>
+    
 
     <script>
         // 1. Move everything into a reusable function
