@@ -29,6 +29,17 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap" rel="stylesheet">
 
+    <script>
+      // Get the name from the URL (?n=Marzena)
+      const urlParams = new URLSearchParams(window.location.search);
+      const userName = urlParams.get('n') || "Guest";
+
+      // Dynamically set the OG tags before Facebook scrapes
+      document.querySelector('meta[property="og:title"]').setAttribute("content", "A special card for " + userName);
+      document.querySelector('meta[property="og:description"]').setAttribute("content", "Open this personalized card from " + userName + "!");
+      document.querySelector('meta[property="og:url"]').setAttribute("content", window.location.href);    
+    </script>
+
     <style>
         body,
         html {
