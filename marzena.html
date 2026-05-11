@@ -19,7 +19,6 @@
         content="We invite you to celebrate our wedding on May 23, 2026. Click to open your invitation.">
 
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kiranaananda.github.io/wcard/">
     <meta property="twitter:title" content="Save the Date | Kirana & Andrzej">
     <meta property="twitter:description"
         content="We invite you to celebrate our wedding on May 23, 2026. Click to open your invitation.">
@@ -376,41 +375,6 @@
             </div>
         </main>
     </section>
-
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-    let name = null;
-
-    // 1. First, check the standard query string (for the old links you already sent)
-    const queryParams = new URLSearchParams(window.location.search);
-    if (queryParams.has("n")) {
-        name = queryParams.get("n");
-    }
-
-    // 2. If no name was found, check the hash (for the new Messenger links)
-    if (!name && window.location.hash) {
-        // Remove the '#' symbol so URLSearchParams can read it properly
-        const hashData = window.location.hash.substring(1); 
-        const hashParams = new URLSearchParams(hashData);
-        
-        if (hashParams.has("n")) {
-            name = hashParams.get("n");
-        }
-    }
-
-    // 3. If we found a name in either place, format and inject it
-    if (name) {
-        const formattedName = name.replace(/[_-]/g, " ");
-        const el = document.getElementById("guest-name");
-        
-        if (el) {
-            el.textContent = formattedName;
-        } else {
-            console.log("Name found, but the 'guest-name' element hasn't loaded.");
-        }
-    }
-});
-    </script>
     
 
     <script>
